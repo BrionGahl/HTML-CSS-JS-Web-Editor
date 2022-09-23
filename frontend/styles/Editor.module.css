@@ -1,0 +1,20 @@
+.editorTitle {
+    padding: 10px;
+    font-family: Tahoma;
+    font-weight: bold;
+}
+
+.editorContainer {
+    background-color: #1d1e22;
+    height: 100%;
+    width: 30%;
+    color: #b7bbc8;
+    padding-left: 5px;
+    position: relative;
+    align-items: stretch;
+}
+
+.editorCode textarea{
+    width: 100%;
+    line-height: 1.2em;
+}

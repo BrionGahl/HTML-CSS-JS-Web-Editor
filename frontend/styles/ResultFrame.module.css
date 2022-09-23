@@ -1,0 +1,5 @@
+.resultFrame {
+    width: 100%;
+    height: 20rem;
+    pointer-events: none;
+}
