@@ -10,6 +10,12 @@ npm run dev
 yarn dev
 ```
 
+Running the project requires NodeJS installed. I don't believe you need the extra scripts. So just installing NodeJS is fine. From here navigate to the frontend folder and run the following command. If something fails contact me on Discord or ensure you have a modern version of npm.
+
+```bash
+npm install
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
