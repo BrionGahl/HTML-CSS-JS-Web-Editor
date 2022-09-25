@@ -238,3 +238,6 @@ README.html
 *.iml
 .idea
 .exercism
+
+### Private info
+application-private.properties
