@@ -5,27 +5,33 @@ import { CssEditor, HtmlEditor, JsEditor } from '../components/Editor'
 import EditorContainer from '../components/EditorContainer'
 import Header from '../components/Header'
 import ResultFrame from '../components/ResultFrame'
+import { useDebounce } from '../utils/debounce'
 
 const Code: NextPage = () => {
-  const [htmlValue, setHtmlValue] = useState("");
-  const [cssValue, setCssValue] = useState("");
-  const [jsValue, setJsValue] = useState("");
-  const [outputValue, setOutputValue] = useState("");
+  const [htmlValue, setHtmlValue] = useState("")
+  const [cssValue, setCssValue] = useState("")
+  const [jsValue, setJsValue] = useState("")
+  const [outputValue, setOutputValue] = useState("")
+
+  const debouncedHtml = useDebounce(htmlValue, 1000)
+  const debouncedCss = useDebounce(cssValue, 1000)
+  const debouncedJs = useDebounce(jsValue, 1000)
+
 
   useEffect(() => {
     const output = `<html>
 <style>
-${cssValue}
+${debouncedCss}
 </style>
 <body>
-${htmlValue}
+${debouncedHtml}
 <script type="text/javascript">
-${jsValue}
+${debouncedJs}
 </script>
 </body>
 </html>`
     setOutputValue(output)  
-  }, [htmlValue, cssValue, jsValue])
+  }, [debouncedHtml, debouncedCss, debouncedJs])
 
   console.log(htmlValue)
   console.log(outputValue)
