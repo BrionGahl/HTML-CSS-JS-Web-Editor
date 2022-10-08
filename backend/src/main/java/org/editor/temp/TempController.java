@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TempController {
 
-    @GetMapping(value = "/temp/{tempId}")
+    @GetMapping(value = "api/v1/temp/{tempId}")
     public Temp getData(@PathVariable int tempId) {
         Temp temp = new Temp("Test Name", tempId);
         return temp;
