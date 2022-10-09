@@ -3,6 +3,7 @@ import axios from 'axios';
 import Router from 'next/router';
 import { useState } from 'react';
 import { API } from '../utils/constants'
+import { setCookie } from 'cookies-next'
 
 type LoginProps = {
     onClick: any
@@ -19,8 +20,21 @@ const Signin = (props: LoginProps) => {
     }
 
     const onClick = (event: any) => {
-        axios.post(`${API}/auth/login`, {"username": username, "password": password}).then(response => {
-            console.log("store user data")
+        axios.post(`${API}/auth/login`, {"username": username, "password": password}).then(response => {            
+            setCookie("user", username, {
+                path: "/",
+                maxAge: 3600,
+                sameSite: true,
+                secure: true,
+                httpOnly: false //want this to be true...
+            })
+            setCookie("token", response.data.token, {
+                path: "/",
+                maxAge: 3600,
+                sameSite: true,
+                secure: true,
+                httpOnly: false //want this to be true...
+            })
             Router.push("/")
         }).catch(function (error) {
             console.log(error.response.status)

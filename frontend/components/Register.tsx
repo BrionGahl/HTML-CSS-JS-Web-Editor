@@ -1,7 +1,9 @@
-import { Box, Button, Stack, TextField } from '@mui/material';
-import axios from 'axios';
-import { useState } from 'react';
+import { Box, Button, Stack, TextField } from '@mui/material'
+import axios from 'axios'
+import { useState } from 'react'
 import Router from 'next/router'
+import { setCookie } from 'cookies-next'
+
 
 import { API } from '../utils/constants';
 
@@ -23,9 +25,21 @@ const Register = (props: RegisterProps) => {
         axios.post(`${API}/auth/register`, {"username": username, "password": password, "role": "user"}).then(registerResponse => {
             console.log(registerResponse.status)
                 axios.post(`${API}/auth/login`, {"username": username, "password": password}).then(loginResponse => {
-                    console.log(loginResponse)
-                    if (loginResponse.status == 200) {
-                        console.log("store user data")
+                    if (loginResponse.status == 200) {            
+                        setCookie("user", username, {
+                            path: "/",
+                            maxAge: 3600,
+                            sameSite: true,
+                            secure: true,
+                            httpOnly: false //want this to be true...
+                        })
+                        setCookie("token", loginResponse.data.token, {
+                            path: "/",
+                            maxAge: 3600,
+                            sameSite: true,
+                            secure: true,
+                            httpOnly: false //want this to be true...
+                        })
                         Router.push("/")
                     }
                 }).catch(function (error) {
