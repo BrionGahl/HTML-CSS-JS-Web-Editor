@@ -1,7 +1,6 @@
 package org.editor.user;
 
-import org.editor.config.JwtAuthenticationFilter;
-import org.editor.model.BadCredentialsResponse;
+import org.editor.model.ErrorResponse;
 import org.editor.model.JwtRequest;
 import org.editor.model.JwtResponse;
 import org.editor.utils.JwtUtil;
@@ -12,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +38,7 @@ public class UserController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword()));
         } catch (Exception e) {
             logger.error("Bad Credentials");
-            return ResponseEntity.ok(new BadCredentialsResponse());
+            return ResponseEntity.ok(new ErrorResponse("Bad Credentials."));
         }
 
         UserDetails user = userService.loadUserByUsername(jwtRequest.getUsername());
@@ -49,6 +49,11 @@ public class UserController {
 
     @RequestMapping(value = "api/v1/auth/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody User user) {
-        return ResponseEntity.ok(userService.registerUser(user));
+        try {
+            userService.loadUserByUsername(user.getUsername());
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.ok(userService.registerUser(user));
+        }
+        return ResponseEntity.ok(new ErrorResponse("Username already exists."));
     }
 }
