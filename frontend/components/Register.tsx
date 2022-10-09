@@ -1,0 +1,57 @@
+import { Box, Button, Stack, TextField } from '@mui/material';
+import axios from 'axios';
+import { useState } from 'react';
+import Router from 'next/router'
+
+import { API } from '../utils/constants';
+
+type RegisterProps = {
+    onClick: any
+}
+
+const Register = (props: RegisterProps) => {
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+
+    const [isBadUsername, setIsBadUsername] = useState(false)
+
+    const toggle = (event: any) => {
+        props.onClick(true)
+    }
+
+    const onClick = (event: any) => {
+        axios.post(`${API}/auth/register`, {"username": username, "password": password, "role": "user"}).then(registerResponse => {
+            console.log(registerResponse.status)
+                axios.post(`${API}/auth/login`, {"username": username, "password": password}).then(loginResponse => {
+                    console.log(loginResponse)
+                    if (loginResponse.status == 200) {
+                        console.log("store user data")
+                        Router.push("/")
+                    }
+                }).catch(function (error) {
+                    console.log(error.response.status)
+                    //should be nothing
+                })
+        }).catch(function (error) {
+            console.log(error.response.status)
+            setIsBadUsername(true)
+        })
+    }
+
+    return (
+        <div>
+            <Box component="form" noValidate>
+                <Stack spacing={4} direction="column">
+                    <TextField error={isBadUsername} helperText={isBadUsername? "Username already exists" : ""} required id="username" label="Username" variant="standard" value={username} onChange={e => {setUsername(e.target.value)}}/>
+                    <TextField required id="password" label="Password" type="password" variant="standard" value={password} onChange={e => {setPassword(e.target.value)}}/>
+                    <Stack spacing={2} direction="row">
+                        <Button variant="contained" disabled={!username || !password} onClick={onClick}>Create Account</Button>
+                        <Button variant="text" onClick={toggle}>Sign in instead</Button>
+                    </Stack>
+                </Stack>
+            </Box>
+        </div>
+    )
+}
+
+export default Register;

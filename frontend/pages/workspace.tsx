@@ -2,12 +2,13 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 
 import { CssEditor, HtmlEditor, JsEditor } from '../components/Editor'
-import EditorContainer from '../components/EditorContainer'
 import Header from '../components/Header'
 import ResultFrame from '../components/ResultFrame'
 import { useDebounce } from '../utils/debounce'
 
-const Code: NextPage = () => {
+import styles from '../styles/EditorContainer.module.css'
+
+const Workspace: NextPage = () => {
   const [htmlValue, setHtmlValue] = useState("")
   const [cssValue, setCssValue] = useState("")
   const [jsValue, setJsValue] = useState("")
@@ -40,14 +41,14 @@ ${debouncedJs}
     <div>
         <Header />
         <h1>Editor</h1>
-        <EditorContainer>
+        <div className={styles.pane}>
           <HtmlEditor value={htmlValue} onChange={setHtmlValue}></HtmlEditor>
           <CssEditor value={cssValue} onChange={setCssValue}></CssEditor>
           <JsEditor value={jsValue} onChange={setJsValue}></JsEditor>
-        </EditorContainer>
+        </div>
         <ResultFrame srcDoc={outputValue}></ResultFrame>
     </div>
   )
 }
 
-export default Code
+export default Workspace

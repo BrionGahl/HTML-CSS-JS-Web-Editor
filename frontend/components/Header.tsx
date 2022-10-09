@@ -6,7 +6,8 @@ const Header = () => {
     return (
         <div className={styles.navbar}>
             <Link href={`/`}><a className={styles.navlinks} >Home</a></Link>
-            <Link href={`/code_editor`}><a className={styles.navlinks}>Code</a></Link>
+            <Link href={`/workspace`}><a className={styles.navlinks}>Workspace</a></Link>
+            <Link href={`/login`}><a className={styles.navlinks}>Login</a></Link>
         </div>
     )
 }
