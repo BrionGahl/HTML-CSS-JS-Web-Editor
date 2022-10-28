@@ -240,4 +240,4 @@ README.html
 .exercism
 
 ### Private info
-*.properties
+application.properties
