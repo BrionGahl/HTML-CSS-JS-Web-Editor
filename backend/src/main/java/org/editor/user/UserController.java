@@ -7,6 +7,7 @@ import org.editor.utils.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +39,7 @@ public class UserController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword()));
         } catch (Exception e) {
             logger.error("Bad Credentials");
-            return ResponseEntity.ok(new ErrorResponse("Bad Credentials."));
+            return new ResponseEntity<>(new ErrorResponse("Bad Credentials."), HttpStatus.UNAUTHORIZED);
         }
 
         UserDetails user = userService.loadUserByUsername(jwtRequest.getUsername());
@@ -54,6 +55,6 @@ public class UserController {
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.ok(userService.registerUser(user));
         }
-        return ResponseEntity.ok(new ErrorResponse("Username already exists."));
+        return new ResponseEntity<>(new ErrorResponse("Username already exists."), HttpStatus.UNAUTHORIZED);
     }
 }
