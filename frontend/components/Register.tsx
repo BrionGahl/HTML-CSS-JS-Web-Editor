@@ -14,6 +14,7 @@ type RegisterProps = {
 const Register = (props: RegisterProps) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [passwordRetype, setPasswordRetype] = useState("")
 
     const [isBadUsername, setIsBadUsername] = useState(false)
 
@@ -58,6 +59,7 @@ const Register = (props: RegisterProps) => {
                 <Stack spacing={4} direction="column">
                     <TextField error={isBadUsername} helperText={isBadUsername? "Username already exists" : ""} required id="username" label="Username" variant="standard" value={username} onChange={e => {setUsername(e.target.value)}}/>
                     <TextField required id="password" label="Password" type="password" variant="standard" value={password} onChange={e => {setPassword(e.target.value)}}/>
+                    <TextField required id="passwordRetype" label="Retype Password" variant="standard" value={passwordRetype} onChange={e => {setPasswordRetype(e.target.value)}}/>
                     <Stack spacing={2} direction="row">
                         <Button variant="contained" disabled={!username || !password} onClick={onClick}>Create Account</Button>
                         <Button variant="text" onClick={toggle}>Sign in instead</Button>
