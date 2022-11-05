@@ -17,13 +17,12 @@ public class WorkspaceService {
 
     public List<Workspace> getAllByUsername(String username) throws Exception {
         Iterable<Workspace> iterWorkspaces = workspaceRepo.findAllByUsername(username);
-
-        if (iterWorkspaces == null) {
-            throw new Exception();
-        }
-
         List<Workspace> workspaces = new ArrayList<>();
         iterWorkspaces.forEach(workspaces::add);
+
+        if (workspaces.isEmpty()) {
+            throw new Exception();
+        }
 
         return workspaces;
     }
