@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
+import static org.mockito.Mockito.doReturn;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class WorkspaceServiceTest {
@@ -26,11 +28,30 @@ public class WorkspaceServiceTest {
     @Test
     @DisplayName("Test getWorkspaceById")
     public void testGetWorkspaceById() {
-        Workspace workspace = new Workspace("635dc73d66472b36fb70d46d", "", "", "", "admin");
+        Workspace workspace = new Workspace("1", "", "", "", "admin");
+        doReturn(Optional.of(workspace)).when(workspaceRepository).findById("1");
 
-        Optional<Workspace> returnedWorkspace = workspaceService.getWorkspaceById("635dc73d66472b36fb70d46d");
+        Optional<Workspace> returnedWorkspace = workspaceService.getWorkspaceById("1");
 
         Assertions.assertTrue(returnedWorkspace.isPresent(), "NOT FOUND");
         Assertions.assertEquals(returnedWorkspace.get(), workspace, "EQUAL");
+    }
+
+    @Test
+    @DisplayName("Test saveWorkspace")
+    public void testSaveWorkspace() {
+        Workspace workspace = new Workspace("1", "", "", "", "admin");
+        doReturn(workspace).when(workspaceRepository).save(workspace);
+
+        Workspace savedWorkspace = workspaceService.saveWorkspace(workspace);
+
+        Assertions.assertEquals(savedWorkspace, workspace, "EQUAL");
+    }
+
+    @Test
+    @DisplayName("Test deleteWorkspaceById")
+    public void testDeleteWorkspaceById() {
+        Workspace workspace = new Workspace("1", "", "", "", "admin");
+        doReturn
     }
 }
