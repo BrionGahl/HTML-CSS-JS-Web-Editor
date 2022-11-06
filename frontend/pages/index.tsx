@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
 import Header from '../components/Header'
-import { parseCookies } from '../utils/cookie'
 import { getCookie, getCookies, hasCookie } from 'cookies-next'
 
 type Props = {
