@@ -29,7 +29,7 @@ public class WorkspaceController {
         return ResponseEntity.ok(created_workspace);
     }
 
-    @RequestMapping(value = "api/v1/workspace/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "api/v1/workspace/{id}", method = RequestMethod.POST)
     public ResponseEntity<?> deleteWorkspace(@PathVariable String id) {
         logger.info(id);
         workspaceService.deleteWorkspaceById(id);

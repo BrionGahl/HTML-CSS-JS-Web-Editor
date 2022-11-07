@@ -81,9 +81,8 @@ ${debouncedJs}
   console.log(outputValue)
 
   return (
-    <div>
+    <div style={{fontFamily: "tahoma", fontWeight: "bold"}}>
         <Header />
-        <h1>Editor</h1>
         <div className={styles.pane}>
           <HtmlEditor value={htmlValue} onChange={setHtmlValue}></HtmlEditor>
           <CssEditor value={cssValue} onChange={setCssValue}></CssEditor>
