@@ -22,11 +22,15 @@ const Register = (props: RegisterProps) => {
         props.onClick(true)
     }
 
+    function passwordsMatch(){
+        return password == passwordRetype;
+    }
+
     const onClick = (event: any) => {
         axios.post(`${API}/auth/register`, {"username": username, "password": password, "role": "user"}).then(registerResponse => {
             console.log(registerResponse.status)
                 axios.post(`${API}/auth/login`, {"username": username, "password": password}).then(loginResponse => {
-                    if (loginResponse.status == 200) {            
+                    if (loginResponse.status == 200) {
                         setCookie("user", username, {
                             path: "/",
                             maxAge: 3600,
@@ -59,9 +63,9 @@ const Register = (props: RegisterProps) => {
                 <Stack spacing={4} direction="column">
                     <TextField error={isBadUsername} helperText={isBadUsername? "Username already exists" : ""} required id="username" label="Username" variant="standard" value={username} onChange={e => {setUsername(e.target.value)}}/>
                     <TextField required id="password" label="Password" type="password" variant="standard" value={password} onChange={e => {setPassword(e.target.value)}}/>
-                    <TextField required id="passwordRetype" label="Retype Password" variant="standard" value={passwordRetype} onChange={e => {setPasswordRetype(e.target.value)}}/>
+                    <TextField error={!passwordsMatch()} helperText={!!passwordRetype && !passwordsMatch()? "Passwords do not match" : ""} required id="passwordRetype" label="Retype Password" variant="standard" value={passwordRetype} onChange={e => {setPasswordRetype(e.target.value)}}/>
                     <Stack spacing={2} direction="row">
-                        <Button variant="contained" disabled={!username || !password} onClick={onClick}>Create Account</Button>
+                        <Button variant="contained" disabled={!username || !password || !passwordsMatch()} onClick={onClick}>Create Account</Button>
                         <Button variant="text" onClick={toggle}>Sign in instead</Button>
                     </Stack>
                 </Stack>
