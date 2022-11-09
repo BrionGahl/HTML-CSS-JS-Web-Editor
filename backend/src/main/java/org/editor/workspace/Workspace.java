@@ -13,6 +13,7 @@ public class Workspace {
     @Id
     private String id;
 
+    private String title;
     private String html;
     private String css;
     private String js;

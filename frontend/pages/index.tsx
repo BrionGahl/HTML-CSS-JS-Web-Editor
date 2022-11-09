@@ -22,15 +22,18 @@ const Home: NextPage<Props> = ({user, tkn}) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    if (!username)
+    if (!username) {
       return
+    }
     
     let config = {
       headers: {Authorization: `Bearer ${token}`}
     }
 
-    axios.get(`${API}/workspace/user/admin`, config).then(response => {
+    axios.get(`${API}/workspace/user/${username}`, config).then(response => {
       setData(response.data)
+    }).catch(function (error) {
+      setData([])
     })
   }, [])
 
@@ -39,6 +42,7 @@ const Home: NextPage<Props> = ({user, tkn}) => {
       headers: {Authorization: `Bearer ${token}`}
     }
     let data = {
+      "title": "Untitled Workspace",
       "html": "",
       "css": "",
       "js": "",
@@ -56,7 +60,7 @@ const Home: NextPage<Props> = ({user, tkn}) => {
         <CardMedia component="img" height="100" image="/htmlcssjs.png" alt="html css js"/>
         <CardContent>
           <Typography gutterBottom component="div">
-            Workspace {index}
+            {data[index]["title"]}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -82,7 +86,7 @@ const Home: NextPage<Props> = ({user, tkn}) => {
       <h1 style={{textAlign: "center"}}>Editor Application</h1>
       <Header />
       <h3>{username ? `Welcome ${username}!` : `Please Login.`}</h3>
-      <Button variant="contained" onClick={createOnClick} style={{marginBottom: "1%"}}>Create</Button>
+      <Button variant="contained" disabled={!username} onClick={createOnClick} style={{marginBottom: "1%"}}>Create</Button>
       <div className="horizontal-container">
         {listWorkspaces}
       </div>

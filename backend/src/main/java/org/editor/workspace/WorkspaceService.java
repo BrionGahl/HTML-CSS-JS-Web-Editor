@@ -31,8 +31,9 @@ public class WorkspaceService {
         return workspaceRepo.save(workspace);
     }
 
-    public void deleteWorkspaceById(String id) {
+    public String deleteWorkspaceById(String id) {
         workspaceRepo.deleteById(id);
+        return id;
     }
 
     public Optional<Workspace> getWorkspaceById(String id) {

@@ -31,21 +31,29 @@ public class WorkspaceServiceTest {
     private WorkspaceRepository workspaceRepository;
 
     @Test
+    @DisplayName("Test deleteWorkspaceById")
+    public void testDeleteWorkspaceById() {
+        String deleted = workspaceService.deleteWorkspaceById("1");
+
+        Assertions.assertEquals(deleted, "1", "EQUAL");
+    }
+
+    @Test
     @DisplayName("Test getWorkspaceById")
     public void testGetWorkspaceById() {
-        Workspace workspace = new Workspace("1", "", "", "", "admin");
+        Workspace workspace = new Workspace("1",  "", "", "", "", "admin");
         doReturn(Optional.of(workspace)).when(workspaceRepository).findById("1");
 
         Optional<Workspace> returnedWorkspace = workspaceService.getWorkspaceById("1");
 
-        Assertions.assertTrue(returnedWorkspace.isPresent(), "NOT FOUND");
+        Assertions.assertTrue(returnedWorkspace.isPresent(), "FOUND");
         Assertions.assertEquals(returnedWorkspace.get(), workspace, "EQUAL");
     }
 
     @Test
     @DisplayName("Test saveWorkspace")
     public void testSaveWorkspace() {
-        Workspace workspace = new Workspace("1", "", "", "", "admin");
+        Workspace workspace = new Workspace("1", "", "", "", "", "admin");
         doReturn(workspace).when(workspaceRepository).save(workspace);
 
         Workspace savedWorkspace = workspaceService.saveWorkspace(workspace);
@@ -56,8 +64,8 @@ public class WorkspaceServiceTest {
     @Test
     @DisplayName("Test getAllByUsername")
     public void testGetAllByUsername() throws Exception {
-        Workspace workspace1 = new Workspace("1", "", "", "", "admin");
-        Workspace workspace2 = new Workspace("2", "", "", "", "admin");
+        Workspace workspace1 = new Workspace("1", "", "", "", "", "admin");
+        Workspace workspace2 = new Workspace("2", "", "", "", "", "admin");
         doReturn(Arrays.asList(workspace1, workspace2)).when(workspaceRepository).findAllByUsername("admin");
 
         List<Workspace> workspaces = workspaceService.getAllByUsername("admin");
