@@ -63,7 +63,7 @@ const Register = (props: RegisterProps) => {
                 <Stack spacing={4} direction="column">
                     <TextField error={isBadUsername} helperText={isBadUsername? "Username already exists" : ""} required id="username" label="Username" variant="standard" value={username} onChange={e => {setUsername(e.target.value)}}/>
                     <TextField required id="password" label="Password" type="password" variant="standard" value={password} onChange={e => {setPassword(e.target.value)}}/>
-                    <TextField error={!passwordsMatch()} helperText={!!passwordRetype && !passwordsMatch()? "Passwords do not match" : ""} required id="passwordRetype" label="Retype Password" variant="standard" value={passwordRetype} onChange={e => {setPasswordRetype(e.target.value)}}/>
+                    <TextField error={!passwordsMatch()} helperText={!!passwordRetype && !passwordsMatch()? "Passwords do not match" : ""} required id="passwordRetype" label="Retype Password" type="password" variant="standard" value={passwordRetype} onChange={e => {setPasswordRetype(e.target.value)}}/>
                     <Stack spacing={2} direction="row">
                         <Button variant="contained" disabled={!username || !password || !passwordsMatch()} onClick={onClick}>Create Account</Button>
                         <Button variant="text" onClick={toggle}>Sign in instead</Button>
