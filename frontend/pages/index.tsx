@@ -57,7 +57,7 @@ const Home: NextPage<Props> = ({user, tkn}) => {
   const listWorkspaces = data.map((workspace, index) =>
     <Card key={index} sx={{maxWidth: 150}} style={{borderStyle: "solid", borderColor: "#B0B0B0", borderWidth:"1px"}}>
       <CardActionArea>
-        <CardMedia component="img" height="100" image="/htmlcssjs.png" alt="html css js"/>
+        <CardMedia component="iframe" sx={{scale(0.5,0.5)}} srcdoc={data[index]["html"]} />
         <CardContent>
           <Typography gutterBottom component="div">
             {data[index]["title"]}
